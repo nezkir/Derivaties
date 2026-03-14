@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 101 — Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-light: #253560;
+    --teal: #0d7c7c;
+    --teal-light: #12a0a0;
+    --teal-pale: #e0f5f5;
+    --bg: #faf8f5;
+    --bg-card: #ffffff;
+    --text: #2d2d2d;
+    --text-muted: #6b7280;
+    --red: #c0392b;
+    --red-pale: #fdf2f2;
+    --green: #1a6b4a;
+    --green-pale: #edfaf3;
+    --purple: #5b3a8a;
+    --purple-pale: #f5f0fc;
+    --gold: #b8860b;
+    --gold-pale: #fefae8;
+    --border: #e2ddd8;
+    --sidebar-w: 260px;
+    --shadow: 0 2px 12px rgba(26,39,68,0.07);
+    --shadow-md: 0 4px 20px rgba(26,39,68,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--navy);
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: var(--teal) transparent;
+  }
+
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-title {
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-subtitle {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .sidebar-nav { padding: 12px 0 32px; }
+
+  .nav-section-label {
+    padding: 16px 20px 6px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--teal-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .nav-link {
+    display: block;
+    padding: 7px 20px 7px 24px;
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--teal-light);
+  }
+
+  .nav-link.active {
+    color: #fff;
+    background: rgba(13,124,124,0.18);
+    border-left-color: var(--teal-light);
+    font-weight: 600;
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 0 40px 80px;
+    max-width: calc(100% - var(--sidebar-w));
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #1a4a6b 100%);
+    margin: 0 -40px 48px;
+    padding: 56px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(13,124,124,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(13,124,124,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-family: 'Lora', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 580px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .badge-teal { background: rgba(13,124,124,0.3); color: #7deaea; border: 1px solid rgba(13,124,124,0.4); }
+  .badge-gold { background: rgba(184,134,11,0.25); color: #f0d060; border: 1px solid rgba(184,134,11,0.3); }
+
+  /* ── SECTION ── */
+  .study-section {
+    margin-bottom: 72px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .icon-navy { background: var(--navy); color: #fff; }
+  .icon-teal { background: var(--teal); color: #fff; }
+  .icon-green { background: var(--green); color: #fff; }
+  .icon-purple { background: var(--purple); color: #fff; }
+  .icon-red { background: var(--red); color: #fff; }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .section-num {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: var(--navy);
+    color: #fff;
+    padding: 14px 22px;
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .card-header.teal { background: var(--teal); }
+  .card-header.navy-light { background: var(--navy-light); }
+
+  .card-body { padding: 22px; }
+
+  /* ── TOPIC OVERVIEW ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .topic-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .topic-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+  .topic-card-head {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .topic-card-head.teal-head {
+    background: linear-gradient(135deg, var(--teal) 0%, #0a5f5f 100%);
+  }
+
+  .topic-num {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .topic-name {
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .topic-card-body { padding: 16px 18px; }
+
+  .topic-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .topic-list li {
+    padding: 4px 0 4px 18px;
+    position: relative;
+    font-size: 0.88rem;
+    color: var(--text);
+    border-bottom: 1px solid #f0ebe6;
+    line-height: 1.5;
+  }
+
+  .topic-list li:last-child { border-bottom: none; }
+
+  .topic-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 0.78rem;
+    top: 5px;
+  }
+
+  /* ── FORMULA TABLE ── */
+  .formula-group { margin-bottom: 32px; }
+
+  .formula-group-title {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .formula-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    font-size: 0.9rem;
+  }
+
+  .formula-table thead th {
+    background: var(--teal);
+    color: #fff;
+    padding: 11px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .formula-table tbody tr {
+    border-bottom: 1px solid #f0ebe6;
+    transition: background 0.15s;
+  }
+
+  .formula-table tbody tr:last-child { border-bottom: none; }
+  .formula-table tbody tr:hover { background: var(--teal-pale); }
+
+  .formula-table td {
+    padding: 11px 16px;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .formula-table td:first-child {
+    font-weight: 600;
+    color: var(--navy);
+    width: 38%;
+  }
+
+  .formula-table td:last-child {
+    color: #2d2d2d;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .formula-highlight {
+    background: var(--teal-pale);
+    border-left: 3px solid var(--teal);
+    padding: 3px 8px;
+    border-radius: 0 4px 4px 0;
+    display: inline-block;
+    font-size: 0.92rem;
+  }
+
+  /* ── WORKED EXAMPLES ── */
+  .example-card {
+    background: var(--bg-card);
+    border-radius: 14px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .example-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 18px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .example-num-badge {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    min-width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .example-title {
+    font-family: 'Lora', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.35;
+  }
+
+  .example-problem {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  .example-body { padding: 24px; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed #e8e3de;
+  }
+
+  .step:last-of-type { border-bottom: none; }
+
+  .step-num {
+    background: var(--navy);
+    color: #fff;
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-label {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .step-text {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .math-box {
+    background: var(--gold-pale);
+    border: 1px solid #e8d484;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #3d2e00;
+    line-height: 1.7;
+  }
+
+  .answer-box {
+    background: var(--green-pale);
+    border: 1px solid #7ed4a8;
+    border-left: 4px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin-top: 18px;
+  }
+
+  .answer-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  .answer-content {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  /* ── PRACTICE PROBLEMS ── */
+  .practice-card {
+    background: var(--purple-pale);
+    border: 1px solid #c5a8f0;
+    border-left: 4px solid var(--purple);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+
+  .practice-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+
+  .practice-text {
+    font-size: 0.95rem;
+    color: #2a1a4a;
+    line-height: 1.6;
+  }
+
+  .practice-note {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: #7a5aaa;
+    font-style: italic;
+  }
+
+  .practice-section {
+    margin-bottom: 32px;
+  }
+
+  .practice-section-title {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #c5a8f0;
+  }
+
+  /* ── PITFALLS ── */
+  .pitfall-card {
+    background: var(--red-pale);
+    border: 1px solid #f5b8b2;
+    border-left: 4px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .pitfall-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .pitfall-text {
+    font-size: 0.92rem;
+    color: #4a1a1a;
+    line-height: 1.6;
+  }
+
+  .tip-card {
+    background: var(--green-pale);
+    border: 1px solid #7ed4a8;
+    border-left: 4px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .tip-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  .tip-text {
+    font-size: 0.92rem;
+    color: #1a3a2a;
+    line-height: 1.6;
+  }
+
+  .pitfall-group {
+    margin-bottom: 30px;
+  }
+
+  .pitfall-group-title {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--red);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f5b8b2;
+  }
+
+  /* ── MISC HELPERS ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; }
+    .topic-grid { grid-template-columns: 1fr; }
+  }
+
+  .inline-em {
+    font-style: italic;
+    color: var(--navy);
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--teal-pale);
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  sup, sub {
+    font-size: 0.72em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sup { top: -0.5em; }
+  sub { bottom: -0.25em; }
+
+  /* divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* scroll-top btn */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 42px; height: 42px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
+  }
+
+  #scroll-top.visible { opacity: 1; }
+  #scroll-top:hover { background: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">Math 101<br>Study Guide</div>
+    <div class="sidebar-subtitle">Calculus &amp; Analysis</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Sections</div>
+    <a class="nav-link" href="#overview">① Topic Overview</a>
+    <a class="nav-link" href="#formulas">② Formula Cheat Sheet</a>
+    <a class="nav-link" href="#examples">③ Worked Examples</a>
+    <a class="nav-link" href="#practice">④ Practice Problems</a>
+    <a class="nav-link" href="#pitfalls">⑤ Common Pitfalls</a>
+
+    <div class="nav-section-label" style="margin-top:10px;">Cheat Sheet Topics</div>
+    <a class="nav-link" href="#f-limits">Limits</a>
+    <a class="nav-link" href="#f-continuity">Continuity</a>
+    <a class="nav-link" href="#f-derivatives">Derivatives</a>
+    <a class="nav-link" href="#f-exponential">Exp &amp; Log</a>
+    <a class="nav-link" href="#f-applications">Applications</a>
+    <a class="nav-link" href="#f-functions">Functions</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main id="main">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="hero-eyebrow">Math 101 — Complete Study Guide</div>
+    <h1 class="hero-title">Calculus: Limits,<br>Derivatives &amp; Applications</h1>
+    <p class="hero-desc">Everything you need for your exam tomorrow — topic overview, cheat sheets, worked examples, practice problems, and last-minute tips.</p>
+    <div class="hero-badges">
+      <span class="badge badge-teal">Limits &amp; Continuity</span>
+      <span class="badge badge-teal">Derivatives</span>
+      <span class="badge badge-teal">Applications</span>
+      <span class="badge badge-gold">Exp &amp; Log Functions</span>
+      <span class="badge badge-gold">Curve Sketching</span>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 1: TOPIC OVERVIEW ═══ -->
+  <section class="study-section" id="overview">
+    <div class="section-header">
+      <div class="section-icon icon-navy">①</div>
+      <div>
+        <div class="section-num">Section 1</div>
+        <h2 class="section-title">Topic Overview</h2>
+      </div>
+    </div>
+
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="topic-card-head">
+          <div class="topic-num">1</div>
+          <div class="topic-name">Functions &amp; Their Graphs</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>Domain and range</li>
+            <li>Increasing and decreasing functions</li>
+            <li>Even and odd functions (symmetry)</li>
+            <li>Piecewise-defined functions</li>
+            <li>Composite functions (f ∘ g)</li>
+            <li>Shifts, scaling &amp; reflections</li>
+            <li>Greatest/least integer functions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card-head">
+          <div class="topic-num">2</div>
+          <div class="topic-name">Limits</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>ε-δ definition of a limit</li>
+            <li>Verification using ε-δ</li>
+            <li>One-sided limits (LHL &amp; RHL)</li>
+            <li>Condition of existence of a limit</li>
+            <li>Infinite limits (±∞)</li>
+            <li>Limits as x → ±∞</li>
+            <li>Important standard formulas</li>
+            <li>Limits of exp/log functions</li>
+            <li>L'Hôpital's Rule (0/0, ∞/∞)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card-head teal-head">
+          <div class="topic-num">3</div>
+          <div class="topic-name">Continuity</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>Three-condition continuity test</li>
+            <li>Continuity from the left/right</li>
+            <li>Continuity on intervals</li>
+            <li>Types of discontinuity</li>
+            <li>Removal, jump, infinite, oscillating</li>
+            <li>Differentiability implies continuity</li>
+            <li>Counterexamples (|x|)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card-head teal-head">
+          <div class="topic-num">4</div>
+          <div class="topic-name">Differentiability &amp; Derivatives</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>Differentiability at a point &amp; on an interval</li>
+            <li>Corner points — not differentiable</li>
+            <li>Derivative of log and exponential</li>
+            <li>Derivative of hyperbolic functions</li>
+            <li>Inverse trig and hyperbolic derivatives</li>
+            <li>Tangent and normal line equations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card-head">
+          <div class="topic-num">5</div>
+          <div class="topic-name">Applications of Derivatives</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>Increasing / decreasing functions</li>
+            <li>Monotonic functions</li>
+            <li>First derivative test for extrema</li>
+            <li>Second derivative test (concavity)</li>
+            <li>Points of inflection</li>
+            <li>Absolute &amp; local extrema</li>
+            <li>Extreme Value Theorem</li>
+            <li>Rolle's Theorem</li>
+            <li>Mean Value Theorem</li>
+            <li>Related rates</li>
+            <li>Linearization &amp; differentials</li>
+            <li>L'Hôpital's Rule (indeterminate forms)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-card-head">
+          <div class="topic-num">6</div>
+          <div class="topic-name">Curve Sketching &amp; Asymptotes</div>
+        </div>
+        <div class="topic-card-body">
+          <ul class="topic-list">
+            <li>7-step graphing strategy</li>
+            <li>Horizontal asymptotes</li>
+            <li>Vertical asymptotes</li>
+            <li>Oblique (slant) asymptotes</li>
+            <li>Working rule for asymptotes</li>
+            <li>Angle of intersection of two curves</li>
+            <li>Relative rate of growth</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 2: FORMULA CHEAT SHEET ═══ -->
+  <section class="study-section" id="formulas">
+    <div class="section-header">
+      <div class="section-icon icon-teal">②</div>
+      <div>
+        <div class="section-num">Section 2</div>
+        <h2 class="section-title">Formula Cheat Sheet</h2>
+      </div>
+    </div>
+
+    <!-- LIMITS -->
+    <div class="formula-group" id="f-limits">
+      <div class="formula-group-title">Limits</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Concept / Theorem</th><th>Formula / Statement</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ε-δ Definition</td>
+            <td>lim<sub>x→c</sub> f(x) = L iff for every ε &gt; 0, ∃ δ &gt; 0 s.t. 0 &lt; |x − c| &lt; δ ⇒ |f(x) − L| &lt; ε</td>
+          </tr>
+          <tr>
+            <td>Right-hand limit</td>
+            <td>lim<sub>x→a<sup>+</sup></sub> f(x) = L: for all ε &gt; 0, ∃ δ &gt; 0 s.t. a &lt; x &lt; a+δ ⇒ |f(x)−L| &lt; ε</td>
+          </tr>
+          <tr>
+            <td>Left-hand limit</td>
+            <td>lim<sub>x→a<sup>−</sup></sub> f(x) = M: for all ε &gt; 0, ∃ δ &gt; 0 s.t. a−δ &lt; x &lt; a ⇒ |f(x)−M| &lt; ε</td>
+          </tr>
+          <tr>
+            <td>Existence condition</td>
+            <td>lim<sub>x→a</sub> f(x) exists ⟺ LHL = RHL, i.e. lim<sub>x→a<sup>−</sup></sub> f(x) = lim<sub>x→a<sup>+</sup></sub> f(x)</td>
+          </tr>
+          <tr>
+            <td>Power formula</td>
+            <td>lim<sub>x→a</sub> (x<sup>n</sup> − a<sup>n</sup>)/(x − a) = n·a<sup>n−1</sup></td>
+          </tr>
+          <tr>
+            <td>Trig limit 1</td>
+            <td>lim<sub>θ→0</sub> (sin θ)/θ = 1</td>
+          </tr>
+          <tr>
+            <td>Trig limit 2</td>
+            <td>lim<sub>θ→0</sub> (cos θ − 1)/θ = 0; lim<sub>θ→0</sub> cos θ = 1</td>
+          </tr>
+          <tr>
+            <td>Trig limit 3</td>
+            <td>lim<sub>θ→0</sub> (tan θ)/θ = 1</td>
+          </tr>
+          <tr>
+            <td>Euler's limit</td>
+            <td>lim<sub>n→∞</sub> (1 + 1/n)<sup>n</sup> = e</td>
+          </tr>
+          <tr>
+            <td>Euler's limit (x→0)</td>
+            <td>lim<sub>x→0</sub> (1+x)<sup>1/x</sup> = e</td>
+          </tr>
+          <tr>
+            <td>Exponential limit</td>
+            <td>lim<sub>x→0</sub> (e<sup>x</sup> − 1)/x = 1</td>
+          </tr>
+          <tr>
+            <td>Log limit</td>
+            <td>lim<sub>x→0</sub> log(1+x)/x = 1</td>
+          </tr>
+          <tr>
+            <td>lim e<sup>x</sup> at 0</td>
+            <td>lim<sub>x→0</sub> e<sup>x</sup> = 1 (proven via squeeze: 1 ≤ e<sup>x</sup> ≤ 1+ex for 0 ≤ x ≤ 1)</td>
+          </tr>
+          <tr>
+            <td>L'Hôpital's Rule (0/0)</td>
+            <td>If f(a) = g(a) = 0 and g′(a) ≠ 0: lim<sub>x→a</sub> f(x)/g(x) = f′(a)/g′(a)</td>
+          </tr>
+          <tr>
+            <td>L'Hôpital's Rule (strong)</td>
+            <td>If f(a) = g(a) = 0 and g′(x) ≠ 0 near a: lim<sub>x→a</sub> f(x)/g(x) = lim<sub>x→a</sub> f′(x)/g′(x)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CONTINUITY -->
+    <div class="formula-group" id="f-continuity">
+      <div class="formula-group-title">Continuity</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Concept</th><th>Formula / Condition</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3-condition test</td>
+            <td>f is continuous at c iff: (1) f(c) exists, (2) lim<sub>x→c</sub>f(x) exists, (3) lim<sub>x→c</sub>f(x) = f(c)</td>
+          </tr>
+          <tr>
+            <td>Right-continuous at c</td>
+            <td>lim<sub>x→c<sup>+</sup></sub> f(x) = f(c)</td>
+          </tr>
+          <tr>
+            <td>Left-continuous at c</td>
+            <td>lim<sub>x→c<sup>−</sup></sub> f(x) = f(c)</td>
+          </tr>
+          <tr>
+            <td>Removable discontinuity</td>
+            <td>LHL = RHL ≠ f(a) (finite)</td>
+          </tr>
+          <tr>
+            <td>Jump discontinuity</td>
+            <td>LHL ≠ RHL (both finite)</td>
+          </tr>
+          <tr>
+            <td>Infinite discontinuity</td>
+            <td>One or both one-sided limits = ±∞</td>
+          </tr>
+          <tr>
+            <td>Differentiable ⇒ Continuous</td>
+            <td>If f′(a) exists then f is continuous at a. (Converse false: |x| is continuous but not differentiable at 0)</td>
+          </tr>
+          <tr>
+            <td>Extreme Value Theorem</td>
+            <td>If f continuous on [a,b] then f attains both an absolute max M and min m on [a,b]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DERIVATIVES -->
+    <div class="formula-group" id="f-derivatives">
+      <div class="formula-group-title">Derivatives — Key Formulas</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Function</th><th>Derivative</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>f(x) = log<sub>e</sub> x</td><td>f′(x) = 1/x</td></tr>
+          <tr><td>f(x) = a<sup>x</sup> (a &gt; 0)</td><td>f′(x) = a<sup>x</sup> log a</td></tr>
+          <tr><td>f(x) = e<sup>x</sup></td><td>f′(x) = e<sup>x</sup></td></tr>
+          <tr><td>sinh x</td><td>cosh x</td></tr>
+          <tr><td>cosh x</td><td>sinh x</td></tr>
+          <tr><td>tanh x</td><td>sech<sup>2</sup> x</td></tr>
+          <tr><td>coth x</td><td>−cosech<sup>2</sup> x</td></tr>
+          <tr><td>sech x</td><td>−sech x tanh x</td></tr>
+          <tr><td>cosech x</td><td>−cosech x coth x</td></tr>
+          <tr><td>sinh<sup>−1</sup> x</td><td>1/√(1+x<sup>2</sup>)</td></tr>
+          <tr><td>cosh<sup>−1</sup> x (x&gt;0)</td><td>1/√(x<sup>2</sup>−1)</td></tr>
+          <tr><td>tanh<sup>−1</sup> x (|x|&lt;1)</td><td>1/(1−x<sup>2</sup>)</td></tr>
+          <tr><td>sech<sup>−1</sup> x (x&lt;1)</td><td>−1/(x√(1−x<sup>2</sup>))</td></tr>
+          <tr><td>sin<sup>−1</sup> x (−1&lt;x&lt;1)</td><td>1/√(1−x<sup>2</sup>)</td></tr>
+          <tr><td>cos<sup>−1</sup> x (−1&lt;x&lt;1)</td><td>−1/√(1−x<sup>2</sup>)</td></tr>
+          <tr><td>tan<sup>−1</sup> x</td><td>1/(1+x<sup>2</sup>)</td></tr>
+          <tr><td>sec<sup>−1</sup> x (|x|≥1)</td><td>1/(x√(x<sup>2</sup>−1))</td></tr>
+          <tr>
+            <td>Tangent line at (x<sub>1</sub>, y<sub>1</sub>)</td>
+            <td>y − y<sub>1</sub> = f′(x<sub>1</sub>)(x − x<sub>1</sub>)</td>
+          </tr>
+          <tr>
+            <td>Normal line at (x<sub>1</sub>, y<sub>1</sub>)</td>
+            <td>y − y<sub>1</sub> = −(1/f′(x<sub>1</sub>))(x − x<sub>1</sub>)</td>
+          </tr>
+          <tr>
+            <td>Differential</td>
+            <td>dy = f′(x) dx</td>
+          </tr>
+          <tr>
+            <td>Angle of intersection of two curves</td>
+            <td>tan θ = ±(m<sub>1</sub>−m<sub>2</sub>)/(1+m<sub>1</sub>m<sub>2</sub>); orthogonal iff m<sub>1</sub>·m<sub>2</sub> = −1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EXP & LOG STANDARD SERIES -->
+    <div class="formula-group" id="f-exponential">
+      <div class="formula-group-title">Standard Series Expansions (for Limits)</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Function</th><th>Series</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>(1+x)<sup>n</sup></td><td>1 + nx/1! + n(n−1)x<sup>2</sup>/2! + …</td></tr>
+          <tr><td>log(1+x)</td><td>x − x<sup>2</sup>/2 + x<sup>3</sup>/3 − …</td></tr>
+          <tr><td>log(1−x)</td><td>−x − x<sup>2</sup>/2 − x<sup>3</sup>/3 − …</td></tr>
+          <tr><td>e<sup>x</sup></td><td>1 + x/1! + x<sup>2</sup>/2! + x<sup>3</sup>/3! + …</td></tr>
+          <tr><td>sin x</td><td>x − x<sup>3</sup>/3! + x<sup>5</sup>/5! − …</td></tr>
+          <tr><td>cos x</td><td>1 − x<sup>2</sup>/2! + x<sup>4</sup>/4! − …</td></tr>
+          <tr><td>tan x</td><td>x + x<sup>3</sup>/3 + 2x<sup>5</sup>/15 + …</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- APPLICATIONS -->
+    <div class="formula-group" id="f-applications">
+      <div class="formula-group-title">Applications of Derivatives</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Theorem / Tool</th><th>Statement / Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1st Derivative Test</td>
+            <td>f′ changes − to + at c ⇒ local min; f′ changes + to − at c ⇒ local max; no sign change ⇒ no extremum</td>
+          </tr>
+          <tr>
+            <td>2nd Derivative Test</td>
+            <td>f′(c) = 0 and f″(c) &lt; 0 ⇒ local max; f′(c) = 0 and f″(c) &gt; 0 ⇒ local min; f″(c) = 0 ⇒ inconclusive</td>
+          </tr>
+          <tr>
+            <td>Critical point</td>
+            <td>Interior point where f′ = 0 or f′ is undefined</td>
+          </tr>
+          <tr>
+            <td>Absolute extrema method</td>
+            <td>(1) Evaluate f at all critical pts; (2) evaluate at endpoints; (3) largest = max, smallest = min</td>
+          </tr>
+          <tr>
+            <td>Concave up</td>
+            <td>f″ &gt; 0 on I; equivalently f′ is increasing on I</td>
+          </tr>
+          <tr>
+            <td>Concave down</td>
+            <td>f″ &lt; 0 on I; equivalently f′ is decreasing on I</td>
+          </tr>
+          <tr>
+            <td>Point of inflection</td>
+            <td>f″ changes sign at that point (concavity changes)</td>
+          </tr>
+          <tr>
+            <td>Rolle's Theorem</td>
+            <td>f continuous on [a,b], differentiable on (a,b), f(a) = f(b) ⇒ ∃ c ∈ (a,b): f′(c) = 0</td>
+          </tr>
+          <tr>
+            <td>Mean Value Theorem</td>
+            <td>f continuous on [a,b], differentiable on (a,b) ⇒ ∃ c: f′(c) = (f(b)−f(a))/(b−a)</td>
+          </tr>
+          <tr>
+            <td>Linearization</td>
+            <td>L(x) = f(a) + f′(a)(x−a)</td>
+          </tr>
+          <tr>
+            <td>Important linearization</td>
+            <td>(1+x)<sup>k</sup> ≈ 1+kx (for x near 0)</td>
+          </tr>
+          <tr>
+            <td>Horizontal asymptote</td>
+            <td>y = b if lim<sub>x→±∞</sub> f(x) = b</td>
+          </tr>
+          <tr>
+            <td>Vertical asymptote</td>
+            <td>x = a if lim<sub>x→a<sup>±</sup></sub> f(x) = ±∞</td>
+          </tr>
+          <tr>
+            <td>Oblique asymptote</td>
+            <td>Divide numerator by denominator; remainder → 0 as x → ±∞; asymptote is the linear quotient part</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FUNCTIONS -->
+    <div class="formula-group" id="f-functions">
+      <div class="formula-group-title">Functions — Definitions &amp; Properties</div>
+      <table class="formula-table">
+        <thead>
+          <tr><th>Concept</th><th>Definition</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Even function</td>
+            <td>f(−x) = f(x) for all x in domain; symmetric about y-axis</td>
+          </tr>
+          <tr>
+            <td>Odd function</td>
+            <td>f(−x) = −f(x) for all x in domain; symmetric about origin</td>
+          </tr>
+          <tr>
+            <td>Increasing on I</td>
+            <td>x<sub>1</sub> &lt; x<sub>2</sub> ⇒ f(x<sub>1</sub>) &lt; f(x<sub>2</sub>) for all x<sub>1</sub>, x<sub>2</sub> ∈ I</td>
+          </tr>
+          <tr>
+            <td>Decreasing on I</td>
+            <td>x<sub>1</sub> &lt; x<sub>2</sub> ⇒ f(x<sub>1</sub>) &gt; f(x<sub>2</sub>) for all x<sub>1</sub>, x<sub>2</sub> ∈ I</td>
+          </tr>
+          <tr>
+            <td>Composite (f∘g)</td>
+            <td>(f∘g)(x) = f(g(x)); domain = {x ∈ D(g) : g(x) ∈ D(f)}</td>
+          </tr>
+          <tr>
+            <td>Vertical shift</td>
+            <td>y = f(x) + k shifts up k units (k &gt; 0); down |k| units (k &lt; 0)</td>
+          </tr>
+          <tr>
+            <td>Horizontal shift</td>
+            <td>y = f(x+h) shifts left h units (h &gt; 0); right |h| units (h &lt; 0)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+  <!-- ═══ SECTION 3: WORKED EXAMPLES ═══ -->
+  <section class="study-section" id="examples">
+    <div class="section-header">
+      <div class="section-icon icon-green">③</div>
+      <div>
+        <div class="section-num">Section 3</div>
+        <h2 class="section-title">Worked Examples</h2>
+      </div>
+    </div>
+
+    <!-- EXAMPLE 1: ε-δ Verification -->
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-num-badge">1</div>
+        <div>
+          <div class="example-title">ε-δ Verification of a Limit</div>
+          <div class="example-problem">Evaluate lim<sub>x→1</sub> (5x − 3) and verify the result using the ε-δ definition.</div>
+        </div>
+      </div>
+      <div class="example-body">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-label">Find the Limit</div>
+            <div class="step-text">Simply substitute x = 1 into the expression (it's a polynomial, so direct substitution works).</div>
+            <div class="math-box">lim<sub>x→1</sub>(5x − 3) = 5(1) − 3 = 5 − 3 = <strong>2</strong></div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-label">Set up the Verification</div>
+            <div class="step-text">We must show: for every ε &gt; 0, there exists δ &gt; 0 such that if |x − 1| &lt; δ, then |(5x − 3) − 2| &lt; ε. Work backwards from the conclusion.</div>
+            <div class="math-box">|(5x − 3) − 2| &lt; ε<br>|5x − 5| &lt; ε<br>5|x − 1| &lt; ε<br>|x − 1| &lt; ε/5</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-label">Choose δ</div>
+            <div class="step-text">The working shows that if |x − 1| &lt; ε/5, the condition is satisfied. So we choose δ = ε/5.</div>
+            <div class="math-box">Let δ = ε/5</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-label">Write the Proof</div>
+            <div class="step-text">Now verify forward: given |x − 1| &lt; δ = ε/5, we show the limit condition holds.</div>
+            <div class="math-box">|(5x − 3) − 2| = |5x − 5| = 5|x − 1| &lt; 5 · (ε/5) = ε ✓</div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <div class="answer-label">✓ Final Answer</div>
+          <div class="answer-content">lim<sub>x→1</sub>(5x − 3) = 2. Verified: choose δ = ε/5; then |x−1| &lt; δ ⇒ |(5x−3)−2| = 5|x−1| &lt; 5·(ε/5) = ε.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXAMPLE 2: Limit using standard formulas -->
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-num-badge">2</div>
+        <div>
+          <div class="example-title">Limit Using Standard Series / Substitution</div>
+          <div class="example-problem">Evaluate: (A) lim<sub>x→0</sub> (e<sup>sin x</sup> − 1)/x &nbsp;&nbsp; (B) lim<sub>x→0</sub> x(e<sup>x</sup> − 1)/(1 − cos x)</div>
+        </div>
+      </div>
+      <div class="example-body">
+
+        <div class="step">
+          <div class="step-num">A1</div>
+          <div class="step-content">
+            <div class="step-label">Part A — Multiply and Divide by sin x</div>
+            <div class="step-text">The expression has e<sup>sin x</sup> − 1 in the numerator. We know lim (e<sup>u</sup>−1)/u = 1 when u→0. Make sin x the "inner" variable.</div>
+            <div class="math-box">lim<sub>x→0</sub> (e<sup>sin x</sup> − 1)/x = lim<sub>x→0</sub> [(e<sup>sin x</sup> − 1)/sin x] · [sin x / x]</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">A2</div>
+          <div class="step-content">
+            <div class="step-label">Part A — Apply Both Standard Limits</div>
+            <div class="step-text">As x→0, sin x→0, so (e<sup>sin x</sup> − 1)/sin x → 1. Also (sin x)/x → 1.</div>
+            <div class="math-box">= 1 × 1 = <strong>1</strong></div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">B1</div>
+          <div class="step-content">
+            <div class="step-label">Part B — Use 1 − cos x = 2 sin<sup>2</sup>(x/2)</div>
+            <div class="step-text">Replace 1 − cos x with 2 sin<sup>2</sup>(x/2), then rearrange to isolate standard limits.</div>
+            <div class="math-box">lim<sub>x→0</sub> x(e<sup>x</sup>−1)/(1−cos x) = lim<sub>x→0</sub> [(e<sup>x</sup>−1)/x] · [x<sup>2</sup> / (2 sin<sup>2</sup>(x/2))] · 2</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">B2</div>
+          <div class="step-content">
+            <div class="step-label">Part B — Evaluate Each Piece</div>
+            <div class="step-text">(e<sup>x</sup>−1)/x → 1; (x/2 / sin(x/2))<sup>2</sup> → 1 since sin θ/θ → 1.</div>
+            <div class="math-box">= 1 × 1 × 2 = <strong>2</strong></div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <div class="answer-label">✓ Final Answers</div>
+          <div class="answer-content">(A) lim<sub>x→0</sub> (e<sup>sin x</sup>−1)/x = 1 &nbsp;|&nbsp; (B) lim<sub>x→0</sub> x(e<sup>x</sup>−1)/(1−cos x) = 2</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXAMPLE 3: Continuity but not Differentiable -->
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-num-badge">3</div>
+        <div>
+          <div class="example-title">Continuous but Not Differentiable</div>
+          <div class="example-problem">Show that f(x) = xe<sup>1/x</sup>/(1+e<sup>1/x</sup>) for x ≠ 0 and f(0) = 0 is continuous but not differentiable at x = 0.</div>
+        </div>
+      </div>
+      <div class="example-body">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-label">Check Continuity — Right-Hand Limit</div>
+            <div class="step-text">As x → 0<sup>+</sup>, 1/x → +∞, so e<sup>1/x</sup> → +∞. Divide numerator and denominator of f(x)/1 by e<sup>1/x</sup>.</div>
+            <div class="math-box">lim<sub>x→0<sup>+</sup></sub> f(x) = lim<sub>x→0<sup>+</sup></sub> x / (e<sup>−1/x</sup> + 1) = 0/(0+1) = 0</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-label">Check Continuity — Left-Hand Limit</div>
+            <div class="step-text">As x → 0<sup>−</sup>, 1/x → −∞, so e<sup>1/x</sup> → 0.</div>
+            <div class="math-box">lim<sub>x→0<sup>−</sup></sub> f(x) = lim<sub>x→0<sup>−</sup></sub> xe<sup>1/x</sup>/(1+e<sup>1/x</sup>) = 0·0/(1+0) = 0</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-label">Conclusion on Continuity</div>
+            <div class="step-text">LHL = RHL = f(0) = 0, so f is continuous at x = 0. ✓</div>
+            <div class="math-box">LHL = RHL = f(0) = 0 ⇒ continuous at x = 0</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-label">Check Right-Hand Derivative</div>
+            <div class="step-text">Compute [f(x)−f(0)]/(x−0) as x → 0<sup>+</sup>.</div>
+            <div class="math-box">lim<sub>x→0<sup>+</sup></sub> f(x)/x = lim<sub>x→0<sup>+</sup></sub> e<sup>1/x</sup>/(1+e<sup>1/x</sup>) = 1 (since e<sup>1/x</sup> → ∞)</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-label">Check Left-Hand Derivative</div>
+            <div class="step-text">As x → 0<sup>−</sup>, e<sup>1/x</sup> → 0.</div>
+            <div class="math-box">lim<sub>x→0<sup>−</sup></sub> f(x)/x = lim<sub>x→0<sup>−</sup></sub> e<sup>1/x</sup>/(1+e<sup>1/x</sup>) = 0/(1+0) = 0</div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <div class="answer-label">✓ Conclusion</div>
+          <div class="answer-content">RHD = 1 ≠ 0 = LHD, so f′(0) does not exist — f is not differentiable at x = 0 — even though it is continuous there.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXAMPLE 4: Tangent/Normal & Curve Intersection -->
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-num-badge">4</div>
+        <div>
+          <div class="example-title">Tangent, Normal &amp; Angle of Intersection</div>
+          <div class="example-problem">Find the angle of intersection of the circles x<sup>2</sup> − 4x + y<sup>2</sup> = 0 and x<sup>2</sup> + y<sup>2</sup> = 8.</div>
+        </div>
+      </div>
+      <div class="example-body">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-label">Find Intersection Points</div>
+            <div class="step-text">Subtract the second equation from the first to find x.</div>
+            <div class="math-box">x<sup>2</sup>−4x+y<sup>2</sup>−(x<sup>2</sup>+y<sup>2</sup>) = 0−8 ⇒ −4x = −8 ⇒ x = 2<br>Substituting: 4 + y<sup>2</sup> = 8 ⇒ y = ±2<br>Intersection points: (2, 2) and (2, −2)</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-label">Find Slopes of Both Circles at (2, 2)</div>
+            <div class="step-text">Differentiate each implicitly, then substitute (2, 2).</div>
+            <div class="math-box">Circle 1: 2x−4+2y(dy/dx) = 0 ⇒ dy/dx = (4−2x)/(2y)<br>At (2,2): m<sub>1</sub> = (4−4)/(4) = 0<br><br>Circle 2: 2x+2y(dy/dx) = 0 ⇒ dy/dx = −x/y<br>At (2,2): m<sub>2</sub> = −2/2 = −1</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-label">Apply the Angle Formula</div>
+            <div class="step-text">Use tan θ = |(m<sub>1</sub> − m<sub>2</sub>)/(1 + m<sub>1</sub>·m<sub>2</sub>)| with m<sub>1</sub> = 0, m<sub>2</sub> = −1.</div>
+            <div class="math-box">tan θ = |(0−(−1))/(1+0·(−1))| = |1/1| = 1<br>θ = tan<sup>−1</sup>(1) = 45°</div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <div class="answer-label">✓ Final Answer</div>
+          <div class="answer-content">The angle of intersection of the two circles at (2, 2) is θ = 45°.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXAMPLE 5: Related Rates -->
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-num-badge">5</div>
+        <div>
+          <div class="example-title">Related Rates</div>
+          <div class="example-problem">Water runs into a conical tank at 9 ft<sup>3</sup>/min. The tank stands point-down, height 10 ft, base radius 5 ft. How fast is the water level rising when the water is 6 ft deep?</div>
+        </div>
+      </div>
+      <div class="example-body">
+
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-label">Identify Variables and Given Information</div>
+            <div class="step-text">Let y = water depth (variable), x = radius of water surface (variable). Given dV/dt = 9 ft<sup>3</sup>/min; tank: H = 10, R = 5.</div>
+            <div class="math-box">dV/dt = 9 ft<sup>3</sup>/min &nbsp;|&nbsp; y = 6 ft (at moment of interest) &nbsp;|&nbsp; dy/dt = ?</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-label">Find the Linking Equation</div>
+            <div class="step-text">By similar triangles: x/y = R/H = 5/10 = 1/2, so x = y/2. Write V in terms of y only.</div>
+            <div class="math-box">V = (1/3)π x<sup>2</sup> y = (1/3)π(y/2)<sup>2</sup>y = (1/3)π(y<sup>2</sup>/4)y = πy<sup>3</sup>/12</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-label">Differentiate with Respect to Time</div>
+            <div class="step-text">Differentiate both sides with respect to t.</div>
+            <div class="math-box">dV/dt = (π/12) · 3y<sup>2</sup> · (dy/dt) = (π/4) y<sup>2</sup> (dy/dt)</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-label">Substitute Known Values and Solve</div>
+            <div class="step-text">Plug in dV/dt = 9 and y = 6.</div>
+            <div class="math-box">9 = (π/4)(36)(dy/dt) = 9π · (dy/dt)<br>dy/dt = 9/(9π) = 1/π ft/min</div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <div class="answer-label">✓ Final Answer</div>
+          <div class="answer-content">The water level is rising at dy/dt = 1/π ≈ 0.318 ft/min when the water is 6 ft deep.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ SECTION 4: PRACTICE PROBLEMS ═══ -->
+  <section class="study-section" id="practice">
+    <div class="section-header">
+      <div class="section-icon icon-purple">④</div>
+      <div>
+        <div class="section-num">Section 4</div>
+        <h2 class="section-title">Practice Problems</h2>
+      </div>
+    </div>
+
+    <p style="color:var(--text-muted); margin-bottom:28px; font-size:0.95rem;">⚠️ No answers are provided here. Work through each problem and share your work — then check it.</p>
+
+    <!-- LIMITS PRACTICE -->
+    <div class="practice-section">
+      <div class="practice-section-title">📌 Limits</div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 1.1</div>
+        <div class="practice-text">Use the ε-δ definition to verify that lim<sub>x→2</sub>(4x − 1) = 7. Find the explicit value of δ in terms of ε.</div>
+        <div class="practice-note">Hint: Isolate |x − 2| in the expression |(4x−1)−7|.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 1.2</div>
+        <div class="practice-text">Evaluate the limit: lim<sub>x→0</sub> (a<sup>x</sup> − b<sup>x</sup>)/x &nbsp; (a, b &gt; 0, a ≠ b). Express the answer in terms of a and b.</div>
+        <div class="practice-note">Hint: Separate and use lim<sub>x→0</sub>(e<sup>x</sup>−1)/x = 1 after writing a<sup>x</sup> = e<sup>x log a</sup>.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 1.3</div>
+        <div class="practice-text">Evaluate lim<sub>x→0</sub> [log(1 + tan x)] / sin x. State any standard limits you use.</div>
+      </div>
+    </div>
+
+    <!-- CONTINUITY/DIFFERENTIABILITY PRACTICE -->
+    <div class="practice-section">
+      <div class="practice-section-title">📌 Continuity &amp; Differentiability</div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 2.1</div>
+        <div class="practice-text">Determine whether f(x) = sin x / x for x ≠ 0, and f(0) = 1 is continuous at x = 0. Justify using all three continuity conditions.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 2.2</div>
+        <div class="practice-text">Show that f(x) = |x − 2| is continuous at x = 2 but not differentiable there. Compute the left and right derivatives separately.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 2.3</div>
+        <div class="practice-text">Let f(x) = x<sup>2</sup> sin(1/x) for x ≠ 0 and f(0) = 0. Show f is differentiable at x = 0 and find f′(0).</div>
+        <div class="practice-note">Hint: Use the limit definition of the derivative directly.</div>
+      </div>
+    </div>
+
+    <!-- APPLICATIONS PRACTICE -->
+    <div class="practice-section">
+      <div class="practice-section-title">📌 Applications of Derivatives</div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 3.1 — Extreme Values</div>
+        <div class="practice-text">Find the absolute maximum and minimum values of f(x) = x<sup>3</sup> − 3x<sup>2</sup> + 1 on the closed interval [−1/2, 4].</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 3.2 — Related Rates</div>
+        <div class="practice-text">A ladder 10 m long rests against a vertical wall. If the bottom slides away at 1 m/s, how fast is the top of the ladder sliding down when the bottom is 6 m from the wall?</div>
+        <div class="practice-note">Draw a diagram, set up x<sup>2</sup> + y<sup>2</sup> = 100, and differentiate with respect to t.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 3.3 — Curve Sketching</div>
+        <div class="practice-text">Sketch the graph of y = x<sup>4</sup>/4 − 2x<sup>2</sup> + 4 showing: domain, critical points, local extrema, inflection points, concavity, and any asymptotes.</div>
+      </div>
+    </div>
+
+    <!-- MVT / ROLLE'S PRACTICE -->
+    <div class="practice-section">
+      <div class="practice-section-title">📌 Rolle's Theorem &amp; MVT</div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 4.1</div>
+        <div class="practice-text">Verify that Rolle's Theorem applies to f(x) = x<sup>2</sup> − 3x + 2 on [1, 2]. Find the value of c guaranteed by the theorem.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 4.2</div>
+        <div class="practice-text">Use the Mean Value Theorem to show that |sin a − sin b| ≤ |a − b| for all real numbers a, b.</div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-label">Practice 4.3</div>
+        <div class="practice-text">Verify all conditions of the MVT for f(x) = e<sup>x</sup> on [0, 1] and find the value c ∈ (0, 1) such that f′(c) = [f(1) − f(0)]/(1 − 0).</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ SECTION 5: COMMON PITFALLS ═══ -->
+  <section class="study-section" id="pitfalls">
+    <div class="section-header">
+      <div class="section-icon icon-red">⑤</div>
+      <div>
+        <div class="section-num">Section 5</div>
+        <h2 class="section-title">Common Pitfalls &amp; Last-Minute Tips</h2>
+      </div>
+    </div>
+
+    <div class="pitfall-group">
+      <div class="pitfall-group-title">🚫 Limits</div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 1</div>
+        <div class="pitfall-text"><strong>Applying L'Hôpital's Rule when the limit is not 0/0 or ∞/∞.</strong> L'Hôpital only applies to indeterminate forms. Applying it to something like lim (x<sup>2</sup>+1)/(x+2) as x→1 — which is already 2/3 — is wrong. Always check whether the form is indeterminate first.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 2</div>
+        <div class="pitfall-text"><strong>Confusing ε and δ.</strong> In the ε-δ proof, ε controls the output (how close f(x) is to L), and δ controls the input (how close x is to c). You find δ in terms of ε — never the other way around.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 3</div>
+        <div class="pitfall-text"><strong>Assuming a limit doesn't exist just because direct substitution gives 0/0.</strong> This is an indeterminate form, not a proof of nonexistence. Always simplify (factor, rationalise, use standard limits) before concluding.</div>
+      </div>
+    </div>
+
+    <div class="pitfall-group">
+      <div class="pitfall-group-title">🚫 Continuity &amp; Differentiability</div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 4</div>
+        <div class="pitfall-text"><strong>Thinking differentiability implies a corner is impossible.</strong> A function is not differentiable at a corner point because the left and right derivatives are unequal. Always check both one-sided derivatives when the formula changes.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 5</div>
+        <div class="pitfall-text"><strong>Skipping the third continuity condition.</strong> It is not enough that f(c) exists and the limit exists separately — they must be equal. Forgetting to verify lim<sub>x→c</sub> f(x) = f(c) is a classic exam error.</div>
+      </div>
+    </div>
+
+    <div class="pitfall-group">
+      <div class="pitfall-group-title">🚫 Derivatives &amp; Applications</div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 6</div>
+        <div class="pitfall-text"><strong>Confusing a critical point with an extremum.</strong> f′(c) = 0 only means c is a critical point; it could still be an inflection point. Always apply the 1st or 2nd derivative test to classify.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 7</div>
+        <div class="pitfall-text"><strong>Forgetting to check endpoints in absolute extrema problems.</strong> On a closed interval [a, b], the absolute maximum or minimum may occur at an endpoint, not at a critical point. Evaluate f at all critical points AND both endpoints.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 8</div>
+        <div class="pitfall-text"><strong>Incorrect sign convention in related rates.</strong> If a quantity is decreasing (e.g. a ladder sliding down), its derivative with respect to t is negative. Always assign signs correctly before substituting.</div>
+      </div>
+
+      <div class="pitfall-card">
+        <div class="pitfall-label">⚠ Pitfall 9</div>
+        <div class="pitfall-text"><strong>Applying Rolle's Theorem without checking all three conditions.</strong> You must verify: (1) f continuous on [a,b], (2) f differentiable on (a,b), and (3) f(a) = f(b). If any condition fails, the conclusion may not hold.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h3 style="font-family:'Lora',serif; color:var(--green); font-size:1.15rem; margin-bottom:16px;">✅ Last-Minute Tips for Tomorrow</h3>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 1 — Standard Limits are Everything</div>
+      <div class="tip-text">Memorise the six or seven key standard limits (sin θ / θ → 1, (e<sup>x</sup>−1)/x → 1, log(1+x)/x → 1, (1+1/n)<sup>n</sup> → e). Most limit problems reduce to one of these after a substitution.</div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 2 — Always State Your Tools</div>
+      <div class="tip-text">When using L'Hôpital, Rolle's, or MVT, write the theorem name and verify its conditions before applying it. Examiners often award marks for the setup, not just the answer.</div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 3 — Differentials for Approximations</div>
+      <div class="tip-text">For approximation questions, dy = f′(x)·dx. Identify f, a, and dx, compute f(a) + dy. Remember the key linearization: (1+x)<sup>k</sup> ≈ 1 + kx for small x.</div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 4 — Related Rates Checklist</div>
+      <div class="tip-text">Every related rates problem follows the same 6 steps: (1) diagram, (2) name variables, (3) write given rates, (4) write what to find, (5) write linking equation, (6) differentiate w.r.t. t, then substitute.</div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 5 — Curve Sketching Sign Tables</div>
+      <div class="tip-text">For curve sketching, always make a sign table for y′ (rising/falling) and y″ (concavity). Arrows in each interval (↗↘ and ∪∩) let you draw the curve with confidence before computing many specific points.</div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-label">💡 Tip 6 — Oblique Asymptote Shortcut</div>
+      <div class="tip-text">For oblique (slant) asymptotes on rational functions where deg(numerator) = deg(denominator) + 1: do polynomial long division. The linear quotient is the asymptote; the remainder term vanishes as x → ±∞.</div>
+    </div>
+
+  </section>
+
+</main>
+
+<button id="scroll-top" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // ── Sidebar active link highlighting ──
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  const sections = [];
+
+  navLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ link, el });
+  });
+
+  function updateActiveLink() {
+    const scrollY = window.scrollY + 120;
+    let active = sections[0];
+    for (const s of sections) {
+      if (s.el.offsetTop <= scrollY) active = s;
+    }
+    navLinks.forEach(l => l.classList.remove('active'));
+    if (active) active.link.classList.add('active');
+  }
+
+  // ── Scroll-to-top button ──
+  const scrollBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    updateActiveLink();
+    scrollBtn.classList.toggle('visible', window.scrollY > 300);
+  });
+
+  updateActiveLink();
+</script>
+</body>
+</html>
